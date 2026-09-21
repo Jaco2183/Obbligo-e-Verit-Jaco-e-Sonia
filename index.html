@@ -2,11 +2,13 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Meta tag per iOS PWA a schermo intero -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Meta tag per iOS PWA a schermo intero nativo -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Obbligo & Verità">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="manifest" href="manifest.json">
     <title>Obbligo & Verità - Jaco e Sonia</title>
     <style>
         :root {
@@ -204,6 +206,15 @@
     </div>
 
     <script>
+        // Registrazione del Service Worker per il funzionamento offline
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('Service Worker registrato con successo:', reg.scope))
+                    .catch(err => console.log('Registrazione Service Worker fallita:', err));
+            });
+        }
+
         const truths = [
             { id: "01", text: "Qual è la fantasia di dominazione o sottomissione più estrema o tabù che hai rifuggito di dirmi fino ad oggi per paura del mio giudizio?", type: "Verità" },
             { id: "12", text: "C'è una pratica legata al sesso anale o all'uso di plug/dildo che vorresti provare o spingere più a fondo, ma che non hai mai avuto il coraggio di chiedermi esplicitamente?", type: "Verità" },
@@ -312,7 +323,6 @@
         const allCards = [...truths, ...dares];
         let currentMode = 'all';
         let activeCard = null;
-        let isRevealed = false;
 
         function selectCategory(mode) {
             currentMode = mode;
@@ -320,7 +330,6 @@
         }
 
         function pickNewCard() {
-            isRevealed = false;
             let pool = allCards;
             if (currentMode === 'truth') pool = truths;
             if (currentMode === 'dare') pool = dares;
@@ -352,7 +361,6 @@
             const cardTextEl = document.getElementById('cardText');
             const cardSubEl = document.getElementById('cardSub');
 
-            // Effetto rotazione/pescaggio simulato
             container.style.transform = 'scale(0.94) rotateX(15deg)';
             setTimeout(() => {
                 container.style.transform = 'scale(1) rotateX(0deg)';
@@ -363,7 +371,6 @@
             }, 150);
         }
 
-        // Inizializza con una carta coperta pronta
         pickNewCard();
     </script>
 </body>
