@@ -73,16 +73,15 @@
 
         .card-container {
             width: 100%;
-            min-height: 320px;
+            min-height: 280px;
             background-color: var(--card-bg);
             border-radius: 24px;
             border: 2px solid var(--card-border);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 25px var(--glow);
-            padding: 25px;
+            padding: 35px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            align-items: center;
             position: relative;
             cursor: pointer;
             transition: transform 0.2s ease, border-color 0.3s ease, background-color 0.3s ease;
@@ -94,7 +93,6 @@
         }
 
         .card-header {
-            width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -116,38 +114,13 @@
             color: var(--text-muted);
         }
 
-        /* Box logo centrale */
-        .illustration-box {
-            width: 130px;
-            height: 130px;
-            background: #000000;
-            border: 1.5px solid #8B1E24;
-            border-radius: 12px;
-            margin: 10px 0;
-            box-shadow: 0 0 15px rgba(139, 30, 36, 0.4), inset 0 0 10px rgba(0,0,0,0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .illustration-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
         .card-body {
-            font-size: 1.1rem;
-            line-height: 1.5;
+            font-size: 1.2rem;
+            line-height: 1.6;
             text-align: center;
-            margin: 10px 0;
+            margin: 20px 0;
             color: #ffffff;
             font-weight: 500;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .card-footer-note {
@@ -216,25 +189,19 @@
 
         <div class="card-container" id="cardContainer" onclick="revealCard()">
             <div class="card-header">
-                <span class="card-id" id="cardId">COPPIA</span>
+                <span class="card-id" id="cardId">#--</span>
                 <span class="card-type" id="cardType">Pronti</span>
             </div>
-            
-            <!-- Logo inserito al centro -->
-            <div class="illustration-box" id="cardImageContainer">
-                <img src="logo.jpg" alt="Logo">
-            </div>
-
             <div class="card-body" id="cardText">
-                Tocca qui sulla carta per pescare e girarla...
+                Tocca un pulsante in basso per scegliere la categoria, poi tocca qui sulla carta per pescare e girarla...
             </div>
-            <div class="card-footer-note" id="cardSub">Jaco & Sonia - Tocca per girare</div>
+            <div class="card-footer-note" id="cardSub">Edizione Privata Hot</div>
         </div>
 
         <div class="btn-group">
             <button class="btn-truth" onclick="selectCategory('truth')">Verità</button>
             <button class="btn-dare" onclick="selectCategory('dare')">Obbligo</button>
-            <button class="btn-all" onclick="selectCategory('all')">RANDOM</button>
+            <button class="btn-all" onclick="selectCategory('all')">Tutte</button>
         </div>
     </div>
 
@@ -263,7 +230,7 @@
             { id: "22", text: "Qual è stata la punizione fisica o verbale che ti ho inflitto durante i nostri giochi che ti ha lasciato il ricordo visivo o mentale più eccitante?", type: "Verità" },
             { id: "23", text: "Vorresti mai estendere una dinamica di sottomissione o controllo anche al di fuori della camera da letto, ad esempio con comandi segreti in pubblico?", type: "Verità" },
             { id: "24", text: "Quando ti masturbi da solo/a pensando a noi, qual è la scena specifica o il gesto esatto che ti fa raggiungere l'orgasmo più velocemente?", type: "Verità" },
-            { id: "25", text: "C'è un sex toy particular (es. electro-stimolazione, macchine per il sesso, morsi/gag, dilatatori) che non abbiamo mai usato ma che sogni di provare?", type: "Verità" },
+            { id: "25", text: "C'è un sex toy particolare (es. electro-stimolazione, macchine per il sesso, morsi/gag, dilatatori) che non abbiamo mai usato ma che sogni di provare?", type: "Verità" },
             { id: "33", text: "C'è mai stata una volta in cui avevi bisogno di un minimo di alterazione o disinibizione per proporre o accettare una pratica spinta con me?", type: "Verità" },
             { id: "35", text: "Ti eccita di più l'idea di inviarmi o ricevere un audio esplicito durante il giorno descrivendo cosa ti farò stasera, o una foto senza veli focalizzata su un dettaglio intimo?", type: "Verità" },
             { id: "39", text: "Quanto è la tua curiosità di provare uno scambio di coppia con il tuo partner o una pratica sessuale con altre persone?", type: "Verità" },
@@ -374,15 +341,11 @@
             const cardTypeEl = document.getElementById('cardType');
             const cardTextEl = document.getElementById('cardText');
             const cardSubEl = document.getElementById('cardSub');
-            const imageContainer = document.getElementById('cardImageContainer');
 
             container.style.borderColor = "#ff1a40";
             cardIdEl.textContent = 'COPPIA';
-            cardTypeEl.textContent = "PRONTI";
-            
-            // Mostra il logo e nasconde temporaneamente il testo della domanda finché non si gira la carta
-            imageContainer.style.display = "flex";
-            cardTextEl.textContent = "Tocca qui sulla carta per pescare e girarla...";
+            cardTypeEl.textContent = activeCard.type.toUpperCase();
+            cardTextEl.textContent = "Carta coperta... Tocca qui per pescare e rivelare l'estrazione.";
             cardSubEl.textContent = "Jaco & Sonia - Tocca per girare";
         }
 
@@ -397,13 +360,10 @@
             const cardTypeEl = document.getElementById('cardType');
             const cardTextEl = document.getElementById('cardText');
             const cardSubEl = document.getElementById('cardSub');
-            const imageContainer = document.getElementById('cardImageContainer');
 
             container.style.transform = 'scale(0.94) rotateX(15deg)';
             setTimeout(() => {
                 container.style.transform = 'scale(1) rotateX(0deg)';
-                // Nasconde il logo quando la carta viene girata e mostra la domanda
-                imageContainer.style.display = "none";
                 cardIdEl.textContent = '#' + activeCard.id;
                 cardTypeEl.textContent = activeCard.type.toUpperCase();
                 cardTextEl.textContent = activeCard.text;
