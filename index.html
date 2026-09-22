@@ -82,8 +82,13 @@
             align-items: center;
             position: relative;
             margin: auto 0;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             cursor: pointer;
+            user-select: none;
+        }
+
+        .card-container:active {
+            transform: scale(0.98);
         }
 
         .card-header-info {
@@ -106,7 +111,7 @@
             font-weight: 600;
         }
 
-        /* Box immagine con il tag img interno per massima compatibilità */
+        /* Box immagine */
         .illustration-box {
             width: 175px;
             height: 175px;
@@ -193,28 +198,28 @@
     </header>
 
     <!-- Card Centrale Interattiva -->
-    <div class="card-container" id="cardContainer" onclick="estraiCasuale()">
+    <div class="card-container" onclick="estraiCasuale()">
         <div class="card-header-info">
             <span id="categoriaCorrente">Coppia</span>
-            <span class="badge-type" id="tipoCorrente">Verità</span>
+            <span class="badge-type" id="tipoCorrente">—</span>
         </div>
 
-        <!-- Box immagine che punta direttamente al file logo.jpg nel repository -->
+        <!-- Logo -->
         <div class="illustration-box">
             <img src="logo.jpg" alt="Logo">
         </div>
 
-        <!-- Prima domanda subito visibile (frase iniziale rimossa) -->
-        <div class="card-text" id="testoDomanda">"Qual è la fantasia più spinta che non hai mai avuto il coraggio di raccontarmi?"</div>
+        <!-- Testo iniziale coperto -->
+        <div class="card-text" id="testoDomanda">"Tocca la card per iniziare..."</div>
         
         <div class="card-footer-info">Jaco & Sonia - Tocca per girare</div>
     </div>
 
-    <!-- Pulsanti di Filtro / Azione in Basso -->
+    <!-- Pulsanti di Filtro in Basso -->
     <div class="nav-buttons">
-        <button class="btn active" id="btnVerita" onclick="impostaFiltro('verita')">Verità</button>
-        <button class="btn" id="btnObbligo" onclick="impostaFiltro('obbligo')">Obbligo</button>
-        <button class="btn" id="btnRandom" onclick="impostaFiltro('random')">Random</button>
+        <button class="btn active" id="btnVerita" onclick="event.stopPropagation(); impostaFiltro('verita')">Verità</button>
+        <button class="btn" id="btnObbligo" onclick="event.stopPropagation(); impostaFiltro('obbligo')">Obbligo</button>
+        <button class="btn" id="btnRandom" onclick="event.stopPropagation(); impostaFiltro('random')">Random</button>
     </div>
 
     <script>
