@@ -106,17 +106,25 @@
             font-weight: 600;
         }
 
-        /* Box che carica direttamente il file logo.jpg */
+        /* Box immagine con il tag img interno per massima compatibilità */
         .illustration-box {
             width: 175px;
             height: 175px;
-            background: #000000 url('logo.jpg') no-repeat center center;
-            background-size: cover;
+            background: #000000;
             border: 1.5px solid #8B1E24;
             border-radius: 6px;
             margin: 5px 0 15px 0;
             box-shadow: 0 0 15px rgba(139, 30, 36, 0.4), inset 0 0 10px rgba(0,0,0,0.8);
-            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .illustration-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .card-text {
@@ -191,10 +199,12 @@
             <span class="badge-type" id="tipoCorrente">Verità</span>
         </div>
 
-        <!-- Box con l'immagine logo.jpg -->
-        <div class="illustration-box"></div>
+        <!-- Box immagine che punta direttamente al file logo.jpg nel repository -->
+        <div class="illustration-box">
+            <img src="logo.jpg" alt="Logo">
+        </div>
 
-        <!-- Prima domanda subito visibile -->
+        <!-- Prima domanda subito visibile (frase iniziale rimossa) -->
         <div class="card-text" id="testoDomanda">"Qual è la fantasia più spinta che non hai mai avuto il coraggio di raccontarmi?"</div>
         
         <div class="card-footer-info">Jaco & Sonia - Tocca per girare</div>
