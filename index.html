@@ -73,7 +73,7 @@
 
         .card-container {
             width: 100%;
-            min-height: 280px;
+            min-height: 320px;
             background-color: var(--card-bg);
             border-radius: 24px;
             border: 2px solid var(--card-border);
@@ -116,7 +116,7 @@
             color: var(--text-muted);
         }
 
-        /* Box centrale per il logo */
+        /* Box logo centrale */
         .illustration-box {
             width: 130px;
             height: 130px;
@@ -217,24 +217,24 @@
         <div class="card-container" id="cardContainer" onclick="revealCard()">
             <div class="card-header">
                 <span class="card-id" id="cardId">COPPIA</span>
-                <span class="card-type" id="cardType">—</span>
+                <span class="card-type" id="cardType">Pronti</span>
             </div>
             
-            <!-- Logo al posto della vecchia scritta iniziale -->
-            <div class="illustration-box">
+            <!-- Logo inserito al centro -->
+            <div class="illustration-box" id="cardImageContainer">
                 <img src="logo.jpg" alt="Logo">
             </div>
 
             <div class="card-body" id="cardText">
-                Tocca per girare la prima carta
+                Tocca qui sulla carta per pescare e girarla...
             </div>
             <div class="card-footer-note" id="cardSub">Jaco & Sonia - Tocca per girare</div>
         </div>
 
         <div class="btn-group">
-            <button class="btn-truth" onclick="event.stopPropagation(); selectCategory('truth')">Verità</button>
-            <button class="btn-dare" onclick="event.stopPropagation(); selectCategory('dare')">Obbligo</button>
-            <button class="btn-all" onclick="event.stopPropagation(); selectCategory('all')">Random</button>
+            <button class="btn-truth" onclick="selectCategory('truth')">Verità</button>
+            <button class="btn-dare" onclick="selectCategory('dare')">Obbligo</button>
+            <button class="btn-all" onclick="selectCategory('all')">RANDOM</button>
         </div>
     </div>
 
@@ -263,7 +263,7 @@
             { id: "22", text: "Qual è stata la punizione fisica o verbale che ti ho inflitto durante i nostri giochi che ti ha lasciato il ricordo visivo o mentale più eccitante?", type: "Verità" },
             { id: "23", text: "Vorresti mai estendere una dinamica di sottomissione o controllo anche al di fuori della camera da letto, ad esempio con comandi segreti in pubblico?", type: "Verità" },
             { id: "24", text: "Quando ti masturbi da solo/a pensando a noi, qual è la scena specifica o il gesto esatto che ti fa raggiungere l'orgasmo più velocemente?", type: "Verità" },
-            { id: "25", text: "C'è un sex toy particolare (es. electro-stimolazione, macchine per il sesso, morsi/gag, dilatatori) che non abbiamo mai usato ma che sogni di provare?", type: "Verità" },
+            { id: "25", text: "C'è un sex toy particular (es. electro-stimolazione, macchine per il sesso, morsi/gag, dilatatori) che non abbiamo mai usato ma che sogni di provare?", type: "Verità" },
             { id: "33", text: "C'è mai stata una volta in cui avevi bisogno di un minimo di alterazione o disinibizione per proporre o accettare una pratica spinta con me?", type: "Verità" },
             { id: "35", text: "Ti eccita di più l'idea di inviarmi o ricevere un audio esplicito durante il giorno descrivendo cosa ti farò stasera, o una foto senza veli focalizzata su un dettaglio intimo?", type: "Verità" },
             { id: "39", text: "Quanto è la tua curiosità di provare uno scambio di coppia con il tuo partner o una pratica sessuale con altre persone?", type: "Verità" },
@@ -374,11 +374,15 @@
             const cardTypeEl = document.getElementById('cardType');
             const cardTextEl = document.getElementById('cardText');
             const cardSubEl = document.getElementById('cardSub');
+            const imageContainer = document.getElementById('cardImageContainer');
 
             container.style.borderColor = "#ff1a40";
             cardIdEl.textContent = 'COPPIA';
-            cardTypeEl.textContent = activeCard.type.toUpperCase();
-            cardTextEl.textContent = "Carta coperta... Tocca qui per pescare e rivelare l'estrazione.";
+            cardTypeEl.textContent = "PRONTI";
+            
+            // Mostra il logo e nasconde temporaneamente il testo della domanda finché non si gira la carta
+            imageContainer.style.display = "flex";
+            cardTextEl.textContent = "Tocca qui sulla carta per pescare e girarla...";
             cardSubEl.textContent = "Jaco & Sonia - Tocca per girare";
         }
 
@@ -393,10 +397,13 @@
             const cardTypeEl = document.getElementById('cardType');
             const cardTextEl = document.getElementById('cardText');
             const cardSubEl = document.getElementById('cardSub');
+            const imageContainer = document.getElementById('cardImageContainer');
 
             container.style.transform = 'scale(0.94) rotateX(15deg)';
             setTimeout(() => {
                 container.style.transform = 'scale(1) rotateX(0deg)';
+                // Nasconde il logo quando la carta viene girata e mostra la domanda
+                imageContainer.style.display = "none";
                 cardIdEl.textContent = '#' + activeCard.id;
                 cardTypeEl.textContent = activeCard.type.toUpperCase();
                 cardTextEl.textContent = activeCard.text;
