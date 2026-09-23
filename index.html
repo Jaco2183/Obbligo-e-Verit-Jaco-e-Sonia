@@ -9,200 +9,280 @@
     <meta name="apple-mobile-web-app-title" content="Obbligo & Verità">
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0d0709">
     <title>Obbligo & Verità - Jaco e Sonia</title>
     <style>
-        :root {
-            --bg-color: #080305;
-            --card-bg: #14070a;
-            --card-border: #3d0a14;
-            --accent-truth: #ff1a40;
-            --accent-dare: #8b0000;
-            --accent-all: #cc0033;
-            --text-main: #f5f0f2;
-            --text-muted: #997a82;
-            --glow: rgba(255, 26, 64, 0.4);
-        }
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background-color: #080305;
+            color: #ffffff;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 20px;
+            justify-content: space-between;
+            padding: 40px 20px 30px 20px;
             overflow-x: hidden;
             background-image: radial-gradient(circle at center, #26050d 0%, #080305 100%);
         }
 
-        .container {
-            width: 100%;
-            max-width: 480px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 25px;
+        /* Header */
+        .header {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 20px;
         }
 
-        header h1 {
+        .title {
+            color: #ff003c;
             font-size: 2rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-align: center;
-            color: #ff1a40;
-            text-shadow: 0 0 25px rgba(255, 26, 64, 0.6);
-            margin-bottom: 5px;
-        }
-
-        header p {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 1rem;
+            font-weight: 800;
             letter-spacing: 2px;
             text-transform: uppercase;
+            text-shadow: 0 0 12px rgba(255, 0, 60, 0.4);
         }
 
+        .subtitle {
+            color: #8a7a80;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            margin-top: 6px;
+            text-transform: uppercase;
+        }
+
+        /* Flip Card Container */
         .card-container {
+            perspective: 1000px;
             width: 100%;
-            min-height: 280px;
-            background-color: var(--card-bg);
+            max-width: 340px;
+            height: 420px;
+            margin: 0 auto;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg);
+            -webkit-transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
             border-radius: 24px;
-            border: 2px solid var(--card-border);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 25px var(--glow);
-            padding: 35px;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.2s ease, border-color 0.3s ease, background-color 0.3s ease;
-            user-select: none;
+            align-items: center;
+            padding: 24px 20px;
+            background-color: #12090c;
+            border: 2px solid #ff003c;
+            box-shadow: 0 0 20px rgba(255, 0, 60, 0.25);
         }
 
-        .card-container:active {
-            transform: scale(0.97);
+        /* Faccia Anteriore (Coperta) */
+        .card-front {
+            background-color: #11080a;
+            justify-content: space-around;
         }
 
-        .card-header {
+        .card-header-row {
+            width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: bold;
         }
 
-        .card-type {
-            padding: 5px 14px;
-            border-radius: 20px;
-            background: rgba(255, 26, 64, 0.1);
-            color: var(--accent-truth);
-            border: 1px solid rgba(255, 26, 64, 0.3);
-        }
-
-        .card-id {
-            color: var(--text-muted);
-        }
-
-        .card-body {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            text-align: center;
-            margin: 20px 0;
-            color: #ffffff;
-            font-weight: 500;
-        }
-
-        .card-footer-note {
-            text-align: center;
+        .card-tag {
+            color: #7a6e72;
             font-size: 0.8rem;
-            color: var(--text-muted);
-            letter-spacing: 1px;
+            font-weight: 700;
+            letter-spacing: 2px;
             text-transform: uppercase;
         }
 
-        .btn-group {
+        .badge-pronti {
+            background-color: rgba(255, 0, 60, 0.15);
+            color: #ff003c;
+            border: 1px solid #ff003c;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
+
+        .logo-box {
+            width: 140px;
+            height: 140px;
+            border-radius: 16px;
+            border: 2px solid #ff003c;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000000;
+            box-shadow: 0 0 15px rgba(255, 0, 60, 0.3);
+        }
+
+        .logo-box img {
             width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 10px;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
-        button {
-            padding: 14px 10px;
-            border-radius: 14px;
-            border: none;
-            font-size: 0.9rem;
-            font-weight: bold;
+        .card-body-text {
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        .main-instruction {
+            font-size: 1.1rem;
+            font-weight: 600;
+            line-height: 1.4;
+            color: #ffffff;
+        }
+
+        /* Faccia Posteriore (Domanda) */
+        .card-back {
+            transform: rotateY(180deg);
+            -webkit-transform: rotateY(180deg);
+            background-color: #14090d;
+            justify-content: space-between;
+        }
+
+        .badge-type {
+            color: #ff003c;
+            border: 1px solid #ff003c;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
+        }
+
+        .question-content {
+            font-size: 1.15rem;
+            font-weight: 500;
+            text-align: center;
+            line-height: 1.5;
+            color: #ffffff;
+            padding: 0 10px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .footer-instruction {
+            font-size: 0.75rem;
+            color: #7a6e72;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        /* Pulsanti Filtro */
+        .controls {
+            display: flex;
+            gap: 12px;
+            width: 100%;
+            max-width: 360px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px 0;
+            border-radius: 16px;
+            background-color: #a30029;
+            color: #ffffff;
+            border: 1px solid #ff003c;
+            font-size: 0.85rem;
+            font-weight: 700;
             letter-spacing: 1px;
+            text-transform: uppercase;
             cursor: pointer;
-            transition: transform 0.1s ease, filter 0.2s ease, box-shadow 0.2s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            transition: all 0.2s ease;
+            text-align: center;
         }
 
-        button:active {
-            transform: scale(0.95);
+        .btn:active {
+            transform: scale(0.96);
+            background-color: #d10034;
         }
 
-        .btn-truth {
-            background: linear-gradient(135deg, #cc0033, #66001a);
-            color: white;
-            border: 1px solid #ff1a40;
-        }
-
-        .btn-dare {
-            background: linear-gradient(135deg, #4d0013, #1a0005);
-            color: #ffb3c1;
-            border: 1px solid #8b0000;
-        }
-
-        .btn-all {
-            background: linear-gradient(135deg, #8b0000, #3d0a14);
-            color: white;
-            border: 1px solid #ff1a40;
-        }
-
-        button:hover {
-            filter: brightness(1.2);
-            box-shadow: 0 0 15px rgba(255, 26, 64, 0.4);
+        .btn.active {
+            background-color: #ff003c;
+            box-shadow: 0 0 12px rgba(255, 0, 60, 0.5);
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>Obbligo & Verità</h1>
-            <p>Jaco e Sonia</p>
-        </header>
+    <!-- Intestazione -->
+    <div class="header">
+        <h1 class="title">OBBLIGO & VERITÀ</h1>
+        <p class="subtitle">JACO E SONIA</p>
+    </div>
 
-        <div class="card-container" id="cardContainer" onclick="revealCard()">
-            <div class="card-header">
-                <span class="card-id" id="cardId">#--</span>
-                <span class="card-type" id="cardType">Pronti</span>
-            </div>
-            <div class="card-body" id="cardText">
-                Tocca un pulsante in basso per scegliere la categoria, poi tocca qui sulla carta per pescare e girarla...
-            </div>
-            <div class="card-footer-note" id="cardSub">Edizione Privata Hot</div>
-        </div>
+    <!-- Interactive Card -->
+    <div class="card-container">
+        <div class="card" id="card" onclick="flipCard()">
+            
+            <!-- FACCIA ANTERIORE (Coperta) -->
+            <div class="card-face card-front">
+                <div class="card-header-row">
+                    <span class="card-tag">COPPIA</span>
+                    <span class="badge-pronti">PRONTI</span>
+                </div>
 
-        <div class="btn-group">
-            <button class="btn-truth" onclick="selectCategory('truth')">Verità</button>
-            <button class="btn-dare" onclick="selectCategory('dare')">Obbligo</button>
-            <button class="btn-all" onclick="selectCategory('all')">Tutte</button>
+                <div class="logo-box">
+                    <img src="logo.jpg" alt="Logo Diavolo" id="cardLogo">
+                </div>
+
+                <div class="card-body-text">
+                    <p class="main-instruction">Tocca qui sulla carta per pescare e girarla...</p>
+                </div>
+            </div>
+
+            <!-- FACCIA POSTERIORE (Domanda estratta) -->
+            <div class="card-face card-back">
+                <div class="card-header-row">
+                    <span class="card-tag" id="cardId">#--</span>
+                    <span class="badge-type" id="questionType">VERITÀ</span>
+                </div>
+
+                <p class="question-content" id="questionText">La domanda o l'obbligo apparirà qui...</p>
+
+                <p class="footer-instruction">TOCCA PER PESCARE UN'ALTRA CARTA</p>
+            </div>
+
         </div>
+    </div>
+
+    <!-- Pulsanti Filtro -->
+    <div class="controls">
+        <button class="btn active" id="btnTruth" onclick="setMode('truth')">VERITÀ</button>
+        <button class="btn" id="btnDare" onclick="setMode('dare')">OBBLIGO</button>
+        <button class="btn" id="btnRandom" onclick="setMode('random')">RANDOM</button>
     </div>
 
     <script>
@@ -240,7 +320,7 @@
             { id: "63", text: "Riusciresti a fare sesso con me in modalità BDSM rimanendo in totale e assoluto silenzio, sapendo che ogni rumore ti costerà una punizione immediata?", type: "Verità" },
             { id: "64", text: "Subito dopo un orgasmo violento o una sessione estrema, quali sono le prime parole o il gesto di aftercare di cui hai assolutamente bisogno per ritrovare l'equilibrio?", type: "Verità" },
             { id: "65", text: "C'è un abito che indossi per uscire o per lavoro che ti eccita al pensiero di indossarlo mentre fai sesso con il tuo partner?", type: "Verità" },
-            { id: "66", text: "Qual è l'aggettivo o il nome con cui desideri essere chiamato/a mentre ti trovi in una posizione di totale sottomissione fisica (es. legato/a o a carponi)?" , type: "Verità"},
+            { id: "66", text: "Qual è l'aggettivo o il nome con cui desideri essere chiamato/a mentre ti trovi in una posizione di totale sottomissione fisica (es. legato/a o a carponi)?", type: "Verità" },
             { id: "67", text: "Se ti chiedessi di masturbarti davanti a me tenendo gli occhi fissi sui tuoi genitali (invece che su di me), quanto ti sentiresti eccitato/a da 1 a 10?", type: "Verità" },
             { id: "68", text: "Qual è la specifica immagine visiva (una mia posa, un'espressione, un dettaglio anatomico) a cui ripensi più spesso quando ti masturbi da solo/a?", type: "Verità" },
             { id: "69", text: "Se ci incontrassimo in un locale fingendo di non conoscerci affatto, qual è la frase più spinta o la proposta indecente che vorresti ti dicessi per convincerti ad andare in bagno insieme?", type: "Verità" },
@@ -320,58 +400,51 @@
             { id: "109", text: "Mettiti nella posizione più vulnerabile o provocante che conosci e rimani completamente fermo/a mentre ti scatto tre foto dal mio telefono.", type: "Obbligo" }
         ];
 
-        const allCards = [...truths, ...dares];
-        let currentMode = 'all';
-        let activeCard = null;
+        let currentMode = 'truth';
+        let isFlipped = false;
 
-        function selectCategory(mode) {
+        function setMode(mode) {
             currentMode = mode;
-            pickNewCard();
-        }
+            
+            document.getElementById('btnTruth').classList.remove('active');
+            document.getElementById('btnDare').classList.remove('active');
+            document.getElementById('btnRandom').classList.remove('active');
 
-        function pickNewCard() {
-            let pool = allCards;
-            if (currentMode === 'truth') pool = truths;
-            if (currentMode === 'dare') pool = dares;
+            if (mode === 'truth') document.getElementById('btnTruth').classList.add('active');
+            if (mode === 'dare') document.getElementById('btnDare').classList.add('active');
+            if (mode === 'random') document.getElementById('btnRandom').classList.add('active');
 
-            activeCard = pool[Math.floor(Math.random() * pool.length)];
-
-            const container = document.getElementById('cardContainer');
-            const cardIdEl = document.getElementById('cardId');
-            const cardTypeEl = document.getElementById('cardType');
-            const cardTextEl = document.getElementById('cardText');
-            const cardSubEl = document.getElementById('cardSub');
-
-            container.style.borderColor = "#ff1a40";
-            cardIdEl.textContent = 'COPPIA';
-            cardTypeEl.textContent = activeCard.type.toUpperCase();
-            cardTextEl.textContent = "Carta coperta... Tocca qui per pescare e rivelare l'estrazione.";
-            cardSubEl.textContent = "Jaco & Sonia - Tocca per girare";
-        }
-
-        function revealCard() {
-            if (!activeCard) {
-                selectCategory('all');
-                return;
+            if (isFlipped) {
+                getNewQuestion();
             }
-
-            const container = document.getElementById('cardContainer');
-            const cardIdEl = document.getElementById('cardId');
-            const cardTypeEl = document.getElementById('cardType');
-            const cardTextEl = document.getElementById('cardText');
-            const cardSubEl = document.getElementById('cardSub');
-
-            container.style.transform = 'scale(0.94) rotateX(15deg)';
-            setTimeout(() => {
-                container.style.transform = 'scale(1) rotateX(0deg)';
-                cardIdEl.textContent = '#' + activeCard.id;
-                cardTypeEl.textContent = activeCard.type.toUpperCase();
-                cardTextEl.textContent = activeCard.text;
-                cardSubEl.textContent = "Tocca per pescare la prossima carta";
-            }, 150);
         }
 
-        pickNewCard();
+        function flipCard() {
+            const card = document.getElementById('card');
+            
+            if (!isFlipped) {
+                getNewQuestion();
+                card.classList.add('flipped');
+                isFlipped = true;
+            } else {
+                card.classList.remove('flipped');
+                isFlipped = false;
+            }
+        }
+
+        function getNewQuestion() {
+            let pool = [];
+            
+            if (currentMode === 'truth') pool = truths;
+            else if (currentMode === 'dare') pool = dares;
+            else if (currentMode === 'random') pool = [...truths, ...dares];
+
+            const activeCard = pool[Math.floor(Math.random() * pool.length)];
+
+            document.getElementById('cardId').innerText = '#' + activeCard.id;
+            document.getElementById('questionType').innerText = activeCard.type.toUpperCase();
+            document.getElementById('questionText').innerText = activeCard.text;
+        }
     </script>
 </body>
 </html>
